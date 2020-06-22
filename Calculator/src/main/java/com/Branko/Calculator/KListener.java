@@ -70,28 +70,32 @@ public class KListener implements KeyListener {
 	
 									}else if(ke.getKeyCode()==KeyEvent.VK_ADD) {
 										
-										if(result.getText().isEmpty() || result.getText().contains("+") || result.getText().contains("-") || result.getText().contains("/") || result.getText().contains("*")) {
+										if(result.getText().isEmpty() || result.getText().contains("+") || (!result.getText().startsWith("-") && result.getText().contains("-")) ||
+												result.getText().contains("/") || result.getText().contains("*")) {
 											
 										}else {
 										result.setText(result.getText()+"+");
 										}
 									}else if(ke.getKeyCode()==KeyEvent.VK_SUBTRACT) {
 										
-										if(result.getText().isEmpty() || result.getText().contains("+") || result.getText().contains("-") || result.getText().contains("/") || result.getText().contains("*")) {
+										if(result.getText().isEmpty() || result.getText().contains("+") || (!result.getText().startsWith("-") && result.getText().contains("-")) ||
+												result.getText().contains("/") || result.getText().contains("*")) {
 											
 										}else {
 										result.setText(result.getText()+"-");
 										}
 									}else if(ke.getKeyCode()==KeyEvent.VK_DIVIDE) {
 										
-										if(result.getText().isEmpty() || result.getText().contains("+") || result.getText().contains("-") || result.getText().contains("/") || result.getText().contains("*")) {
+										if(result.getText().isEmpty() || result.getText().contains("+") || (!result.getText().startsWith("-") && result.getText().contains("-")) ||
+												result.getText().contains("/") || result.getText().contains("*")) {
 											
 										}else {
 										result.setText(result.getText()+"/");
 									}
 									}else if(ke.getKeyCode()==KeyEvent.VK_MULTIPLY) {
 										
-										if(result.getText().isEmpty() || result.getText().contains("+") || result.getText().contains("-") || result.getText().contains("/") || result.getText().contains("*")) {
+										if(result.getText().isEmpty() || result.getText().contains("+") || (!result.getText().startsWith("-") && result.getText().contains("-")) ||
+												result.getText().contains("/") || result.getText().contains("*")) {
 											
 										}else {
 										result.setText(result.getText()+"*");
@@ -105,7 +109,8 @@ public class KListener implements KeyListener {
 											
 											
 										} else {
-											if(result.getText().contains("+") || result.getText().contains("-") || result.getText().contains("/") || result.getText().contains("*") || !result.getText().contains(".")) {
+											if(result.getText().contains("+") || (!result.getText().startsWith("-") && result.getText().contains("-")) ||
+													result.getText().contains("/") || result.getText().contains("*") || !result.getText().contains(".")) {
 											result.setText(result.getText()+".");
 											}
 										}
@@ -129,7 +134,11 @@ public class KListener implements KeyListener {
 											
 												for(int i=0;i<result.getText().length();i++) {
 													
-													if(result.getText().charAt(i)==plus) {
+													if(result.getText().startsWith("-")==true && i==0) {
+														i++;
+													}
+													
+													if(result.getText().charAt(i)==plus) {	
 														
 														a=Double.parseDouble(result.getText().substring(0,i));
 														b=Double.parseDouble(result.getText().substring(i+1,result.getText().length()));
@@ -138,10 +147,15 @@ public class KListener implements KeyListener {
 												}	
 												result.setText(c.plus(a, b)+"");
 												
-											} else if(result.getText().contains("-")) {
+											} else if((result.getText().contains("-") && result.getText().startsWith("-")==false) ||
+													(result.getText().substring(1, result.getText().length()).contains("-") && result.getText().startsWith("-"))==true) {
 												
 												
 												for(int i=0;i<result.getText().length();i++) {
+													
+													if(result.getText().startsWith("-")==true && i==0) {
+														i++;
+													}
 													
 													if(result.getText().charAt(i)==minus) {
 														
@@ -157,6 +171,10 @@ public class KListener implements KeyListener {
 												
 												for(int i=0;i<result.getText().length();i++) {
 													
+													if(result.getText().startsWith("-")==true && i==0) {
+														i++;
+													}
+													
 													if(result.getText().charAt(i)==times) {
 														
 														a=Double.parseDouble(result.getText().substring(0,i));
@@ -171,6 +189,10 @@ public class KListener implements KeyListener {
 												
 												for(int i=0;i<result.getText().length();i++) {
 													
+													if(result.getText().startsWith("-")==true && i==0) {
+														i++;
+													}
+													
 													if(result.getText().charAt(i)==divide) {
 														
 														a=Double.parseDouble(result.getText().substring(0,i));
@@ -182,13 +204,7 @@ public class KListener implements KeyListener {
 											
 											}
 										
-										
-										
-										
-										
-										
-										
-										
+
 										
 									}
 									

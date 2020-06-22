@@ -31,7 +31,7 @@ public class AListener implements ActionListener{
 						private JButton dot = new JButton(".");
 						private JButton about=new JButton();
 						private Logic c;
-						private List<String> brojevi;
+						private List<Double> brojevi;
 						
 						
 						
@@ -58,7 +58,7 @@ public class AListener implements ActionListener{
 							this.divide=divide;
 							this.about=about;
 							this.c=new Logic();
-							this.brojevi=new ArrayList<String>();
+							this.brojevi=new ArrayList<Double>();
 							
 						}
 						
@@ -70,10 +70,12 @@ public class AListener implements ActionListener{
 								if(ae.getSource()==num1) {
 									
 									result.setText(result.getText()+"1");
+									
 								}
 								else if(ae.getSource()==num2) {
 									
 									result.setText(result.getText()+"2");
+									
 								}
 								else if(ae.getSource()==num3) {
 									
@@ -111,24 +113,32 @@ public class AListener implements ActionListener{
 									
 									result.setText(result.getText()+"0");
 								}
-								else if(ae.getSource()==about) {
-									
-									result.setText("Created by Branko Jesic 2020");
-								}
+							
 								else if(ae.getSource()==plus) {
 										
-									if(result.getText().isEmpty() || result.getText().contains("+") || result.getText().contains("-") || result.getText().contains("/") || result.getText().contains("*") ) {
-												
-									}
-									else {
-										result.setText(result.getText()+"+");
-										}
-								}else if(ae.getSource()==minus) {
-									
-									if(result.getText().isEmpty() || result.getText().contains("+") || result.getText().contains("-") || result.getText().contains("/") || result.getText().contains("*")) {
+									if(result.getText().isEmpty() || result.getText().contains("+") || (!result.getText().startsWith("-") && result.getText().contains("-")) ||
+											result.getText().contains("/") || result.getText().contains("*")) {
 										
 									}else {
+										
+										result.setText(result.getText()+"+");
+										
+									
+											}
+								}else if(ae.getSource()==minus) {
+									
+								
+									
+									if(result.getText().isEmpty() || result.getText().contains("+") || (!result.getText().startsWith("-") && result.getText().contains("-")) ||
+											result.getText().contains("/") || result.getText().contains("*")) {
+											
+			
+									}else {
+										
+										
 									result.setText(result.getText()+"-");
+									
+									
 											}
 								}else if(ae.getSource()==dot) {
 									
@@ -137,23 +147,31 @@ public class AListener implements ActionListener{
 										
 									}else{
 										
-										if(result.getText().contains("+") || result.getText().contains("-") || result.getText().contains("/") || result.getText().contains("*") || !result.getText().contains(".")) {
-										result.setText(result.getText()+".");
+										if(result.getText().contains("+") || (!result.getText().startsWith("-") && result.getText().contains("-")) || result.getText().contains("/") ||
+												result.getText().contains("*") || !result.getText().contains(".")) {
+										
+											result.setText(result.getText()+".");
 										}
 									}
 								}else if(ae.getSource()==times) {
 									
-									if(result.getText().isEmpty() || result.getText().contains("+") || result.getText().contains("-") || result.getText().contains("/") || result.getText().contains("*")) {
+									if(result.getText().isEmpty() || result.getText().contains("+") || (!result.getText().startsWith("-") && result.getText().contains("-")) ||
+											result.getText().contains("/") || result.getText().contains("*")) {
 										
 									}else {
+										
 									result.setText(result.getText()+"*");
+									
 											}
 								}else if(ae.getSource()==divide) {
 									
-									if(result.getText().isEmpty()  || result.getText().contains("+") || result.getText().contains("-") || result.getText().contains("/") || result.getText().contains("*")) {
+									if(result.getText().isEmpty()  || result.getText().contains("+") || (!result.getText().startsWith("-") && result.getText().contains("-")) ||
+											result.getText().contains("/") || result.getText().contains("*")) {
 										
 									}else {
+										
 									result.setText(result.getText()+"/");
+									
 											}	
 
 								}else if(ae.getSource()==equals) {
@@ -168,27 +186,37 @@ public class AListener implements ActionListener{
 										
 										if(result.getText().contains("+")) {
 											
+												
 											
 												for(int i=0;i<result.getText().length();i++) {
 													
+													if(result.getText().startsWith("-")==true && i==0) {
+														i++;
+													}
+													
 													if(result.getText().charAt(i)==plus) {
-														
+													
 														a=Double.parseDouble(result.getText().substring(0,i));
-														b=Double.parseDouble(result.getText().substring(i,result.getText().length()));
+														b=Double.parseDouble(result.getText().substring(i+1,result.getText().length()));
 													}
 													
 												}	result.setText(c.plus(a, b)+"");
 												
 												
-										}else if(result.getText().contains("-")) {
+										}else if((result.getText().contains("-") && result.getText().startsWith("-")==false) ||
+												(result.getText().substring(1, result.getText().length()).contains("-") && result.getText().startsWith("-"))==true) {
 											
 											
 											for(int i=0;i<result.getText().length();i++) {
 												
+												if(result.getText().startsWith("-")==true && i==0) {
+													i++;
+												}
+												
 												if(result.getText().charAt(i)==minus) {
 													
 													a=Double.parseDouble(result.getText().substring(0,i));
-													b=Double.parseDouble(result.getText().substring(i,result.getText().length()));
+													b=Double.parseDouble(result.getText().substring(i+1,result.getText().length()));
 												}
 												
 											}	result.setText(c.minus(a, b)+"");		
@@ -197,6 +225,10 @@ public class AListener implements ActionListener{
 									
 									
 									for(int i=0;i<result.getText().length();i++) {
+										
+										if(result.getText().startsWith("-")==true && i==0) {
+											i++;
+										}
 										
 										if(result.getText().charAt(i)==times) {
 											
@@ -207,20 +239,25 @@ public class AListener implements ActionListener{
 									}	result.setText(c.times(a, b)+"");	
 									
 								
-								}else if(result.getText().contains("/")) {
+								}else if(result.getText().contains("/") || result.getText().contains("/") && result.getText().startsWith("-") ) {
 									
 									
 									for(int i=0;i<result.getText().length();i++) {
+										int start=0;
+										if(result.getText().startsWith("-")==true && i==0) {
+											i++;
+											start++;
+										}
 										
 										if(result.getText().charAt(i)==divide) {
 											
-											a=Double.parseDouble(result.getText().substring(0,i));
+											a=Double.parseDouble(result.getText().substring(start,i));
 											b=Double.parseDouble(result.getText().substring(i+1,result.getText().length()));
+										
 										}
 										
-									}	result.setText(c.divide(a, b)+"");	
-									
-								
+									}	result.setText(c.divide(a, b)+"");						
+						
 								}
 										
 										
