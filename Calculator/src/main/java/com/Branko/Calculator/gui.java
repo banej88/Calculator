@@ -1,6 +1,8 @@
 package com.Branko.Calculator;
 
 import javax.swing.*;
+import javax.swing.text.DefaultEditorKit;
+
 import java.awt.*;
 import java.net.URL;
 
@@ -26,6 +28,7 @@ public class gui implements Runnable{
 					private JButton times = new JButton("x");
 					private JButton divide = new JButton("/");
 					private JButton dot = new JButton(".");
+					private JButton delete = new JButton("Delete");
 				
 					private Font f = new Font(Font.SANS_SERIF,Font.BOLD,30);
 					private AListener b;
@@ -33,7 +36,7 @@ public class gui implements Runnable{
 					
 					public void run() {
 						
-						frame = new JFrame("Basic Calculator");
+						frame = new JFrame("Calculator v1.0");
 						
 						ImageIcon icon = new ImageIcon("resource/icon.png");
 						frame.setIconImage(icon.getImage());
@@ -56,10 +59,12 @@ public class gui implements Runnable{
 											
 							
 							
-							this.b=new AListener(result,num1,num2,num3,num4,num5,num6,num7,num8,num9,num0,clear,plus,minus,equals,dot,times,divide);
+							this.b=new AListener(result,num1,num2,num3,num4,num5,num6,num7,num8,num9,num0,clear,plus,minus,equals,dot,times,divide,delete);
 							this.c=new KListener(result);
 							GridLayout layout = new GridLayout(3,1);
 							container.setLayout(layout);
+							Action beep = result.getActionMap().get(DefaultEditorKit.deletePrevCharAction);
+							beep.setEnabled(false);
 							container.add(result);
 							result.setBackground(Color.black);
 							result.setFont(f);
@@ -68,7 +73,7 @@ public class gui implements Runnable{
 							
 							container.add(numbersPanel());
 							container.add(functionsPanel());
-							
+										
 		
 					}
 					
@@ -185,6 +190,12 @@ public class gui implements Runnable{
 						equals.addActionListener(b);
 						equals.setFocusable(false);
 						panel.add(equals);
+						delete.setFont(f);
+						delete.setForeground(Color.white);
+						delete.setBackground(Color.DARK_GRAY);
+						delete.addActionListener(b);
+						delete.setFocusable(false);
+						panel.add(delete);
 						return panel;
 					}
 
