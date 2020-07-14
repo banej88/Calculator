@@ -70,6 +70,8 @@ public class gui implements Runnable{
 							result.setFont(f);
 							result.setForeground(Color.white);
 							result.setEditable(false);
+							result.setHorizontalAlignment(JTextField.RIGHT);
+						
 							
 							container.add(numbersPanel());
 							container.add(functionsPanel());
